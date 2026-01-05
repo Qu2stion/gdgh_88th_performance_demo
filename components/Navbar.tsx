@@ -45,7 +45,7 @@ export default function Navbar() {
             className="flex items-center rounded-md bg-black/90 px-2 py-1"
             >
             <Image
-              src="/images/gdgh_logo_dark.png"
+              src="images/gdgh_logo_dark.png"
               alt="공대극회 로고"
               width={80}
               height={80}
