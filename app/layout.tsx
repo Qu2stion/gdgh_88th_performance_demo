@@ -12,7 +12,7 @@ export default function RootLayout({
         {/* 공통 배경 */}
         <div
           className="fixed inset-0 -z-10 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/poster2.jpg')" }}
+          style={{ backgroundImage: "url('images/poster2.jpg')" }}
         />
 
         {/* 공통 오버레이 */}
