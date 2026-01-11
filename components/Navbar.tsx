@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { withBasePath } from "@/lib/withBasePath";
 
 const TICKET_URL = "https://forms.gle/여기에_구글폼_URL";
 const INSTAGRAM_URL =
@@ -10,6 +11,48 @@ const INSTAGRAM_URL =
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // 아래 스크롤 시 Navbar 숨김
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const DELTA = 8; // 민감도 (px)
+
+    const onScroll = () => {
+      if (ticking || mobileOpen) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const diff = y - lastY;
+
+        // 최상단에서는 항상 보이게
+        if (y <= 0) {
+          setHidden(false);
+          setScrolled(false);
+          lastY = y;
+          ticking = false;
+          return;
+        }
+
+        setScrolled(true);
+
+        // 미세 스크롤 무시
+        if (Math.abs(diff) >= DELTA) {
+          if (diff > 0) setHidden(true);   // 아래로
+          else setHidden(false);           // 위로
+          lastY = y;
+        }
+
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [mobileOpen]);
 
   // Drawer 열려 있을 때 뒤 페이지 스크롤 막기
   useEffect(() => {
@@ -36,7 +79,13 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header
+      className={[
+        "fixed top-0 left-0 right-0 z-50",
+        "transition-transform duration-200 ease-out",
+        hidden ? "-translate-y-full" : "translate-y-0",
+      ].join(" ")} 
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mt-4 flex items-center justify-between rounded-xl border border-white/5 bg-black/40 backdrop-blur-md px-4 py-3">
           {/* 로고 클릭하면 홈으로 */}
@@ -45,7 +94,7 @@ export default function Navbar() {
             className="flex items-center rounded-md bg-black/90 px-2 py-1"
             >
             <Image
-              src="images/gdgh_logo_dark.png"
+              src={withBasePath("/images/gdgh_logo_dark.png")}
               alt="공대극회 로고"
               width={80}
               height={80}
@@ -60,6 +109,9 @@ export default function Navbar() {
             </Link>
             <Link href="/cast" className="hover:text-white transition">
               Cast·Staff
+            </Link>
+            <Link href="/relations" className="hover:text-white transition">
+              등장인물 관계도
             </Link>
             <Link href="/video" className="hover:text-white transition">
               홍보영상
@@ -158,6 +210,13 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
           >
             Cast · Staff
+          </Link>
+          <Link
+            href="/relations"
+            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
+            onClick={() => setMobileOpen(false)}
+          >
+            등장인물 관계도
           </Link>
           <Link
             href="/video"
