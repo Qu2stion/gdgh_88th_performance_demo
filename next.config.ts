@@ -7,9 +7,13 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
 
-  // GitHub Pages(레포 하위 경로) 대응
   basePath: process.env.NODE_ENV === "production" ? `/${repo}` : "",
   assetPrefix: process.env.NODE_ENV === "production" ? `/${repo}/` : "",
+
+  env: {
+    NEXT_PUBLIC_BASE_PATH:
+      process.env.NODE_ENV === "production" ? `/${repo}` : "",
+  },
 };
 
 export default nextConfig;
