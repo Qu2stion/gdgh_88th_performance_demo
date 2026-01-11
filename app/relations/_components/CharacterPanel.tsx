@@ -91,7 +91,7 @@ export default function CharacterPanel({ id, onClose, onShowVideo }: Props) {
         <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black/30">
           {character.img ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={withBasePath(character.img)} alt={character.label} className="h-full w-full object-cover" />
+            <img src={character.img} alt={character.label} className="h-full w-full object-cover" />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-xs text-white/60">NO IMG</div>
           )}
