@@ -2,23 +2,104 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { withBasePath } from "@/lib/withBasePath";
 
 const TICKET_URL = "https://forms.gle/여기에_구글폼_URL";
 const INSTAGRAM_URL =
   "https://www.instagram.com/gdgh_yonsei?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
 
+function useIsMobile(breakpointPx = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const compute = () => setIsMobile(window.innerWidth < breakpointPx);
+    compute();
+    window.addEventListener("resize", compute, { passive: true });
+    return () => window.removeEventListener("resize", compute);
+  }, [breakpointPx]);
+
+  return isMobile;
+}
+
+function IconMenu({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M4 6h16M4 12h16M4 18h16"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function IconClose({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+/** 예매 아이콘: Ticket stub (가장 직관적) */
+function IconTicket({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M8 7h12v3a2 2 0 0 0 0 4v3H8v-3a2 2 0 0 1 0-4V7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8 7H6a2 2 0 0 0-2 2v1a2 2 0 0 1 0 4v1a2 2 0 0 0 2 2h2"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 9v6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray="2 2"
+      />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const isMobile = useIsMobile(768);
 
-  // 아래 스크롤 시 Navbar 숨김
+  const menuLinks = useMemo(
+    () => [
+      { href: "/about", label: "연극 소개" },
+      { href: "/cast", label: "Cast · Staff" },
+      { href: "/relations", label: "등장인물 관계도" },
+      { href: "/video", label: "홍보영상" },
+      { href: "/schedule", label: "공연 일정" },
+      { href: "/club", label: "공대극회 소개" },
+      { href: "/location", label: "오시는 길" },
+    ],
+    []
+  );
+
+  // 데스크톱에서만: 아래 스크롤 시 Navbar 숨김
   useEffect(() => {
+    if (isMobile) return;
+
     let lastY = window.scrollY;
     let ticking = false;
-    const DELTA = 8; // 민감도 (px)
+    const DELTA = 8;
 
     const onScroll = () => {
       if (ticking || mobileOpen) return;
@@ -28,21 +109,16 @@ export default function Navbar() {
         const y = window.scrollY;
         const diff = y - lastY;
 
-        // 최상단에서는 항상 보이게
         if (y <= 0) {
           setHidden(false);
-          setScrolled(false);
           lastY = y;
           ticking = false;
           return;
         }
 
-        setScrolled(true);
-
-        // 미세 스크롤 무시
         if (Math.abs(diff) >= DELTA) {
-          if (diff > 0) setHidden(true);   // 아래로
-          else setHidden(false);           // 위로
+          if (diff > 0) setHidden(true);
+          else setHidden(false);
           lastY = y;
         }
 
@@ -52,20 +128,25 @@ export default function Navbar() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [mobileOpen]);
+  }, [isMobile, mobileOpen]);
 
   // Drawer 열려 있을 때 뒤 페이지 스크롤 막기
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
+    const originalTouchAction = document.body.style.touchAction;
 
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+      setHidden(false); // Drawer 열리면 항상 보이게(데스크톱 포함)
     } else {
       document.body.style.overflow = originalOverflow;
+      document.body.style.touchAction = originalTouchAction;
     }
 
     return () => {
       document.body.style.overflow = originalOverflow;
+      document.body.style.touchAction = originalTouchAction;
     };
   }, [mobileOpen]);
 
@@ -78,107 +159,126 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [mobileOpen]);
 
+  const headerTransform =
+    !isMobile && hidden ? "-translate-y-full" : "translate-y-0";
+
   return (
     <header
       className={[
         "fixed top-0 left-0 right-0 z-50",
         "transition-transform duration-200 ease-out",
-        hidden ? "-translate-y-full" : "translate-y-0",
-      ].join(" ")} 
+        headerTransform,
+      ].join(" ")}
     >
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="mt-4 flex items-center justify-between rounded-xl border border-white/5 bg-black/40 backdrop-blur-md px-4 py-3">
-          {/* 로고 클릭하면 홈으로 */}
-          <Link
-            href="/"
-            className="flex items-center rounded-md bg-black/90 px-2 py-1"
-            >
+      {/* =========================
+          Mobile Topbar (Apple 스타일)
+          - 여백 0
+          - 투명도 0 (검은 단색)
+          - 로고 좌측 작게, 우측에 예매 아이콘 + 메뉴
+          ========================= */}
+      <div className="md:hidden h-12 bg-black">
+        <div className="h-full px-3 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src={withBasePath("/images/gdgh_logo_dark.png")}
               alt="공대극회 로고"
-              width={80}
-              height={80}
-              className="opacity-90"
+              width={44}
+              height={22}
+              className="opacity-95"
+              priority
             />
           </Link>
 
-          {/* 가운데 메뉴: 내부 페이지 (데스크톱 전용) */}
-          <nav className="hidden md:flex items-center gap-8 text-sm text-white/75">
-            <Link href="/about" className="hover:text-white transition">
-              연극 소개
-            </Link>
-            <Link href="/cast" className="hover:text-white transition">
-              Cast·Staff
-            </Link>
-            <Link href="/relations" className="hover:text-white transition">
-              등장인물 관계도
-            </Link>
-            <Link href="/video" className="hover:text-white transition">
-              홍보영상
-            </Link>
-            <Link href="/schedule" className="hover:text-white transition">
-              공연 일정
-            </Link>
-            <Link href="/club" className="hover:text-white transition">
-              공대극회 소개
-            </Link>
-            <Link href="/location" className="hover:text-white transition">
-              오시는 길
-            </Link>
-          </nav>
-
-          {/* 우측: 외부 링크 (데스크톱 전용: 모바일에서는 drawer로 이동) */}
-          <div className="hidden md:flex items-center gap-2">
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition"
-            >
-              Instagram
-            </a>
+          <div className="flex items-center gap-1">
             <a
               href={TICKET_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md bg-white font-medium text-black hover:bg-neutral-200 transition px-4 py-2 text-sm whitespace-nowrap"
+              className="rounded-md p-2 text-white/85 hover:bg-white/10 transition"
+              aria-label="예매하기"
+              title="예매하기"
             >
-              예매하기
+              <IconTicket />
             </a>
-          </div>
 
-          {/* 모바일 메뉴 버튼 (모바일 전용) */}
-          <button
-            className="md:hidden rounded-md p-2 text-white/80 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(true)}
-            aria-label="메뉴 열기"
-          >
-            ☰
-          </button>
+            <button
+              className="rounded-md p-2 text-white/85 hover:bg-white/10 transition"
+              onClick={() => setMobileOpen(true)}
+              aria-label="메뉴 열기"
+            >
+              <IconMenu />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* =========================
-          Mobile Drawer (항상 렌더)
+          Desktop Navbar
           ========================= */}
+      <div className="hidden md:block">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mt-3 flex items-center justify-between rounded-xl border border-white/10 bg-black px-4 py-1">
+            {/* 로고 클릭하면 홈으로 */}
+            <Link href="/" className="flex items-center rounded-md bg-black/90 px-2 py-1">
+              <Image
+                src={withBasePath("/images/gdgh_logo_dark.png")}
+                alt="공대극회 로고"
+                width={80}
+                height={40}
+                className="opacity-90"
+                priority
+              />
+            </Link>
 
-      {/* Overlay (페이드) */}
+            {/* 가운데 메뉴: 내부 페이지 */}
+            <nav className="flex items-center gap-8 text-sm text-white/75">
+              {menuLinks.map((l) => (
+                <Link key={l.href} href={l.href} className="hover:text-white transition">
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* 우측: 외부 링크 */}
+            <div className="flex items-center gap-2">
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-md px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition"
+              >
+                Instagram
+              </a>
+              <a
+                href={TICKET_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-md bg-white font-medium text-black hover:bg-neutral-200 transition px-4 py-2 text-sm whitespace-nowrap"
+              >
+                예매하기
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* =========================
+          Mobile Drawer
+          ========================= */}
       <div
         className={[
-          "fixed inset-0 z-40 bg-black/60 transition-opacity duration-200",
-          mobileOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none",
+          "fixed inset-0 z-40 bg-black/70",
+          "transition-opacity duration-200 ease-out",
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
         ].join(" ")}
         onClick={() => setMobileOpen(false)}
         aria-hidden="true"
       />
 
-      {/* Panel (슬라이드) */}
       <aside
         className={[
-          "fixed top-0 right-0 z-50 h-full w-[78vw] max-w-sm",
-          "border-l border-white/10 bg-neutral-950/95 backdrop-blur-md p-6",
+          "fixed top-0 right-0 z-50 h-[100svh] w-[82vw] max-w-sm",
+          "border-l border-white/10 bg-black/95 p-6 shadow-2xl",
           "transform transition-transform duration-200 ease-out",
           mobileOpen ? "translate-x-0" : "translate-x-full",
         ].join(" ")}
@@ -192,60 +292,21 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             aria-label="메뉴 닫기"
           >
-            ✕
+            <IconClose />
           </button>
         </div>
 
         <nav className="mt-6 flex flex-col gap-2 text-base">
-          <Link
-            href="/about"
-            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(false)}
-          >
-            연극 소개
-          </Link>
-          <Link
-            href="/cast"
-            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(false)}
-          >
-            Cast · Staff
-          </Link>
-          <Link
-            href="/relations"
-            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(false)}
-          >
-            등장인물 관계도
-          </Link>
-          <Link
-            href="/video"
-            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(false)}
-          >
-            홍보영상
-          </Link>
-          <Link
-            href="/schedule"
-            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(false)}
-          >
-            공연 일정
-          </Link>
-          <Link
-            href="/club"
-            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(false)}
-          >
-            공대극회 소개
-          </Link>
-          <Link
-            href="/location"
-            className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
-            onClick={() => setMobileOpen(false)}
-          >
-            오시는 길
-          </Link>
+          {menuLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="rounded-lg px-3 py-3 text-white/85 hover:bg-white/10 transition"
+              onClick={() => setMobileOpen(false)}
+            >
+              {l.label}
+            </Link>
+          ))}
 
           <div className="my-3 border-t border-white/10" />
 

@@ -11,15 +11,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="relative min-h-screen text-white">
+      <body className="relative min-h-[100svh] text-white overflow-x-hidden">
         {/* 공통 배경 */}
         <div
-          className="fixed inset-0 -z-10 bg-cover bg-center"
+          className="fixed left-0 top-0 -z-10 w-full h-[100svh] bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${withBasePath("/images/poster2.jpg")})` }}
         />
 
         {/* 공통 오버레이 */}
-        <div className="fixed inset-0 -z-10 bg-gradient-to-b from-black/85 via-black/70 to-black/95" />
+        <div className="fixed left-0 top-0 -z-10 w-full h-[100svh] bg-gradient-to-b from-black/85 via-black/70 to-black/95" />
 
         {/* 공통 네비게이션 */}
         <Navbar />
