@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/gdgh_88th_performance_demo/_next/static/chunks/ff1a16fafef87110.js","/gdgh_88th_performance_demo/_next/static/chunks/7340adf74ff47ec0.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+0:{"buildId":"2APQOLyswyQOoIwMm2E1n","rsc":["$","$1","c",{"children":[["$","main",null,{"className":"min-h-screen text-white pt-28 px-6","children":["$","div",null,{"className":"mx-auto max-w-4xl space-y-4","children":[["$","h1",null,{"className":"text-3xl font-bold","children":"Cast · Staff"}],["$","p",null,{"className":"text-white/70","children":"(임시) 배우/스태프 리스트를 카드나 표 형태로 배치합니다."}]]}]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+4:null
