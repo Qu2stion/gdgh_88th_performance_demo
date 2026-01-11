@@ -12,14 +12,26 @@ export const CHARACTERS: CharacterNode[] = [
     monologueUrl: "https://www.youtube.com/embed/85NtvAH20YA",
     kind: "main",
   },
-  { id: "jeongbae", label: "정배", role: "편집장", img: withBasePath("/cast/jeongbae.jpg"), kind: "main" },
-  { id: "seungwook", label: "승욱", role: "변호사", img: withBasePath("/cast/seungwook.jpg"), kind: "main" },
-  { id: "dongyeol", label: "돈결", role: "검사", img: withBasePath("/cast/donkyeol.jpg"), kind: "main" },
-  { id: "wondal", label: "원달", role: "판사", img: withBasePath("/cast/wondal.jpg"), kind: "main" },
+  { id: "jeongbae", label: "정배", role: "편집장", img: withBasePath("/cast/jeongbae.jpg"), kind: "main",
+    monologueUrl: "https://youtu.be/zyrjsaeA8zs?si=raCO-zUhzYRhJw1H"
+  },
+  { id: "seungwook", label: "승욱", role: "변호사", img: withBasePath("/cast/seungwook.jpg"), kind: "main",
+    monologueUrl: "https://youtu.be/tgAEJZH7QPs?si=9C-FfrqErY-YL7tL"
+  },
+  { id: "dongyeol", label: "돈결", role: "검사", img: withBasePath("/cast/donkyeol.jpg"), kind: "main",
+    monologueUrl: "https://youtu.be/K6UPetn7ZHs?si=klpOZ4vR6McfCN8d"
+  },
+  { id: "wondal", label: "원달", role: "판사", img: withBasePath("/cast/wondal.jpg"), kind: "main",
+    monologueUrl: "https://youtu.be/fE9EadYytWo?si=CHp9nFrP3uWR4KET"
+  },
 
   // extra (관계도 정렬 제외)
-  { id: "man", label: "남자", role: "목소리", kind: "extra" },
-  { id: "woman", label: "여자", role: "목소리", kind: "extra" },
+  { id: "man", label: "남자", role: "목소리", kind: "extra",
+    monologueUrl: "https://youtu.be/0_vBuSGR4jQ?si=rG8HWyfdL3lgI5ye"
+  },
+  { id: "woman", label: "여자", role: "목소리", kind: "extra",
+    monologueUrl: "https://youtu.be/MLdQeImpPFI?si=qYbIXDZxhy1SOhTd"
+  },
 ];
 
 function courtLabelFromType(type?: "ally" | "conflict" | "court" | "pressure") {

@@ -159,8 +159,7 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [mobileOpen]);
 
-  const headerTransform =
-    !isMobile && hidden ? "-translate-y-full" : "translate-y-0";
+  const headerTransform = !isMobile && hidden ? "-translate-y-full" : "translate-y-0";
 
   return (
     <header
@@ -171,12 +170,9 @@ export default function Navbar() {
       ].join(" ")}
     >
       {/* =========================
-          Mobile Topbar (Apple 스타일)
-          - 여백 0
-          - 투명도 0 (검은 단색)
-          - 로고 좌측 작게, 우측에 예매 아이콘 + 메뉴
+          Mobile Topbar
           ========================= */}
-      <div className="md:hidden h-12 bg-black">
+      <div className="md:hidden h-12 bg-black border-b border-white/10">
         <div className="h-full px-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image
@@ -213,18 +209,18 @@ export default function Navbar() {
       </div>
 
       {/* =========================
-          Desktop Navbar
+          Desktop Navbar (상단 여백/박스 제거: 풀폭 바 형태)
           ========================= */}
-      <div className="hidden md:block">
+      <div className="hidden md:block bg-black border-b border-white/10">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="mt-3 flex items-center justify-between rounded-xl border border-white/10 bg-black px-4 py-1">
+          <div className="h-16 flex items-center justify-between">
             {/* 로고 클릭하면 홈으로 */}
-            <Link href="/" className="flex items-center rounded-md bg-black/90 px-2 py-1">
+            <Link href="/" className="flex items-center">
               <Image
                 src={withBasePath("/images/gdgh_logo_dark.png")}
                 alt="공대극회 로고"
-                width={80}
-                height={40}
+                width={84}
+                height={42}
                 className="opacity-90"
                 priority
               />
@@ -233,7 +229,11 @@ export default function Navbar() {
             {/* 가운데 메뉴: 내부 페이지 */}
             <nav className="flex items-center gap-8 text-sm text-white/75">
               {menuLinks.map((l) => (
-                <Link key={l.href} href={l.href} className="hover:text-white transition">
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="hover:text-white transition whitespace-nowrap"
+                >
                   {l.label}
                 </Link>
               ))}
