@@ -28,7 +28,7 @@ export default function CharacterGraph() {
   };
 
   return (
-    <div className="w-full pt-40">
+    <div className="w-full pt-20">
       <RevealSection>
       {/* Main (2 columns) */}
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-4 items-start">

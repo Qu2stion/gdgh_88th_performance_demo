@@ -2,7 +2,7 @@ import LocationMap from "./LocationMap";
 
 export default function LocationPage() {
   return (
-    <main className="mx-auto px-6 pt-32 pb-24">
+    <main className="mx-auto px-6 pb-24">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-2xl font-semibold mb-8">오시는 길</h1>
 

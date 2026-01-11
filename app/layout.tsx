@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { withBasePath } from "@/lib/withBasePath";
+import PageTransition from "@/components/PageTransition";
 
 
 export default function RootLayout({
@@ -24,7 +25,11 @@ export default function RootLayout({
         <Navbar />
 
         {/* 각 페이지 내용 */}
-        {children}
+        <PageTransition>
+          <main className="pt-navbar">
+          {children}
+          </main>
+        </PageTransition>
       </body>
     </html>
   );
