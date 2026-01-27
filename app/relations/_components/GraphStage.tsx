@@ -7,7 +7,6 @@ import type { RelationsState, RelationsEvent } from "../_domain/state";
 import { CHARACTERS, RELATIONS } from "../_data/relations";
 import { buildGraphModel } from "../_domain/graphModel";
 import { computeLayout, lerpPoint } from "../_domain/layoutPresets";
-import { withBasePath } from "@/lib/withBasePath";
 
 type Props = {
   state: RelationsState;
@@ -290,7 +289,7 @@ export default function GraphStage({ state, dispatch, showEdgeLabels = true }: P
                     </clipPath>
                   </defs>
                   <image
-                    href={withBasePath(n.img)}
+                    href={n.img}
                     x={-(r - 2)}
                     y={-(r - 2)}
                     width={(r - 2) * 2}

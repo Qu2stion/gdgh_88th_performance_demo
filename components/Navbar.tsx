@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { withBasePath } from "@/lib/withBasePath";
 
 const TICKET_URL = "https://forms.gle/여기에_구글폼_URL";
 const INSTAGRAM_URL =
@@ -176,7 +175,7 @@ export default function Navbar() {
         <div className="h-full px-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src={withBasePath("/images/gdgh_logo_dark.png")}
+              src={"/images/gdgh_logo_dark.png"}
               alt="공대극회 로고"
               width={44}
               height={22}
@@ -217,7 +216,7 @@ export default function Navbar() {
             {/* 로고 클릭하면 홈으로 */}
             <Link href="/" className="flex items-center">
               <Image
-                src={withBasePath("/images/gdgh_logo_dark.png")}
+                src={"/images/gdgh_logo_dark.png"}
                 alt="공대극회 로고"
                 width={84}
                 height={42}

@@ -1,27 +1,27 @@
 // relations/_data/relations.ts
 import type { CharacterNode, CharacterEdge } from "../_domain/types";
-import { withBasePath } from "@/lib/withBasePath";
+
 
 export const CHARACTERS: CharacterNode[] = [
   {
     id: "juhyeok",
     label: "주혁",
     role: "기자",
-    img: withBasePath("/cast/juhyeok.jpeg"),
+    img: "/cast/juhyeok.jpeg",
     bio: "진실을 좇는 기자. 사건의 핵심을 파고들수록 더 큰 압력과 마주한다.",
     monologueUrl: "https://www.youtube.com/embed/85NtvAH20YA",
     kind: "main",
   },
-  { id: "jeongbae", label: "정배", role: "편집장", img: withBasePath("/cast/jeongbae.jpg"), kind: "main",
+  { id: "jeongbae", label: "정배", role: "편집장", img: "/cast/jeongbae.jpg", kind: "main",
     monologueUrl: "https://youtu.be/zyrjsaeA8zs?si=raCO-zUhzYRhJw1H"
   },
-  { id: "seungwook", label: "승욱", role: "변호사", img: withBasePath("/cast/seungwook.jpg"), kind: "main",
+  { id: "seungwook", label: "승욱", role: "변호사", img: "/cast/seungwook.jpg", kind: "main",
     monologueUrl: "https://youtu.be/tgAEJZH7QPs?si=9C-FfrqErY-YL7tL"
   },
-  { id: "dongyeol", label: "돈결", role: "검사", img: withBasePath("/cast/donkyeol.jpg"), kind: "main",
+  { id: "dongyeol", label: "돈결", role: "검사", img: "/cast/donkyeol.jpg", kind: "main",
     monologueUrl: "https://youtu.be/K6UPetn7ZHs?si=klpOZ4vR6McfCN8d"
   },
-  { id: "wondal", label: "원달", role: "판사", img: withBasePath("/cast/wondal.jpg"), kind: "main",
+  { id: "wondal", label: "원달", role: "판사", img: "/cast/wondal.jpg", kind: "main",
     monologueUrl: "https://youtu.be/fE9EadYytWo?si=CHp9nFrP3uWR4KET"
   },
 

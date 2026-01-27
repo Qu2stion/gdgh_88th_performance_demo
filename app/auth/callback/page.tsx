@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { supabaseBrowser } from "@/lib/supabaseBrowser";
 import { useRouter } from "next/navigation";
-import { withBasePath } from "@/lib/withBasePath";
+
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function AuthCallbackPage() {
       }
 
       setMsg("세션 확보 완료. 테스트 페이지로 이동합니다.");
-      router.replace(withBasePath("/me"));
+      router.replace("/me");
     })();
   }, [router]);
 

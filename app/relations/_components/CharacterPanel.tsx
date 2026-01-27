@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react";
 import { CHARACTERS, RELATIONS } from "../_data/relations";
-import { withBasePath } from "@/lib/withBasePath";
 
 type Props = {
   id: string;

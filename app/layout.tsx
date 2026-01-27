@@ -1,6 +1,5 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { withBasePath } from "@/lib/withBasePath";
 import PageTransition from "@/components/PageTransition";
 
 
@@ -15,7 +14,7 @@ export default function RootLayout({
         {/* 공통 배경 */}
         <div
           className="fixed left-0 top-0 -z-10 w-full h-[100svh] bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${withBasePath("/images/poster2.jpg")})` }}
+          style={{ backgroundImage: `url(${"/images/poster2.jpg"})` }}
         />
 
         {/* 공통 오버레이 */}

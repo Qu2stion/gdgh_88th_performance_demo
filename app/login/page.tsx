@@ -2,7 +2,6 @@
 "use client";
 
 import { supabaseBrowser } from "@/lib/supabaseBrowser";
-import { withBasePath } from "@/lib/withBasePath";
 
 export default function LoginPage() {
   const onLogin = async () => {
