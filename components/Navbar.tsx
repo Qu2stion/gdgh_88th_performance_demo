@@ -84,7 +84,7 @@ export default function Navbar() {
     () => [
       { href: "/about", label: "연극 소개" },
       { href: "/cast", label: "Cast · Staff" },
-      { href: "/relations", label: "등장인물 관계도" },
+      { href: "/relations", label: "등장인물" },
       { href: "/video", label: "홍보영상" },
       { href: "/schedule", label: "공연 일정" },
       { href: "/club", label: "공대극회 소개" },

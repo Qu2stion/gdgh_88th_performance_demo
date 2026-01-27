@@ -56,7 +56,7 @@ export default function VideoSection({ selected }: Props) {
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-xl font-semibold text-white">인물 독백 영상</div>
+          <div className="text-xl font-semibold text-white">독백영상</div>
           <div className="mt-1 text-sm text-white/60">
             선택한 인물의 독백(또는 관련 영상)을 확인할 수 있습니다.
           </div>
