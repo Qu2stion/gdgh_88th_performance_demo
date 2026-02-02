@@ -1,4 +1,4 @@
-import type { CalendarCell } from "./types";
+import type { CalendarCell } from "../../_types";
 
 function pad2(n: number) {
   return String(n).padStart(2, "0");

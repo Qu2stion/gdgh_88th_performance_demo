@@ -1,4 +1,4 @@
-import type { ShowSession } from "../_domain/types";
+import type { ShowSession } from "../../_types";
 
 export const SESSIONS: ShowSession[] = [
   {

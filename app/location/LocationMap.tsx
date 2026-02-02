@@ -1,14 +1,20 @@
 export default function LocationMap() {
+  const placeName = encodeURIComponent("연세대학교 학생회관");
+  const mapUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${placeName}`;
+  
+  // API 키가 없을 경우 사용하는 완성형 임베드 링크입니다.
+  const fallbackUrl = `https://maps.google.com/maps?q=${placeName}&t=&z=16&ie=UTF8&iwloc=B&output=embed`;
+
   return (
-    <div className="w-full aspect-[16/9.5] rounded-xl overflow-hidden border border-white/10">
+    <div className="w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border border-white/10">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.6442375121223!2d126.93580007571234!3d37.56344482430563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3563772e2e3c2e4f%3A0x4679094cc5b446cd!2z7Jew7IS464yA7ZWZ6rWQIO2VmeyDne2ajOq0gA!5e0!3m2!1sko!2skr!4v1768073261442!5m2!1sko!2skr"
+        src={fallbackUrl}
         className="w-full h-full"
-        style={{ border:0 }}
+        style={{ border: 0 }}
         allowFullScreen
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        />
+      />
     </div>
   );
 }

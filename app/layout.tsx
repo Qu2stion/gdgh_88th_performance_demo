@@ -9,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
+<html lang="ko" style={{ overflowY: "scroll"}}>
       <body className="relative min-h-[100svh] text-white overflow-x-hidden">
         {/* 공통 배경 */}
         <div

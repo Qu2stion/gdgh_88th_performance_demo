@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import type { CalendarCell } from "../_domain/types";
+import type { CalendarCell } from "../../_types";
 import { addMonths, buildCalendarCells } from "../_domain/calendar";
 
 type Props = {
