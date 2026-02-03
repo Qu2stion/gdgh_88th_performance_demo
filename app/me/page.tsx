@@ -55,7 +55,7 @@ async function getMyTickets(): Promise<TicketDetail[]> {
 
 export default async function MyPage() {
   const tickets = await getMyTickets();
-  const userName = "김공대"; // Mock User Name
+  const userName = "홍길동"; // Mock User Name
 
   return (
     <div className="mx-auto max-w-2xl px-5 py-12 pb-24 min-h-[80vh]">
