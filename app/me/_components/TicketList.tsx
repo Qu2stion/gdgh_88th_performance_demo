@@ -1,9 +1,11 @@
+// app/me/_components/TicketList.tsx
 "use client";
 
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { TicketDetail } from "@/app/_types";
+// [수정] 헷갈리는 @ 별칭 대신, 가장 확실한 상대 경로로 변경했습니다.
+import { TicketDetail } from "../../_types"; 
 
 export default function TicketList({ tickets }: { tickets: TicketDetail[] }) {
   
